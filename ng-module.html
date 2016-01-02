@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Example - example-ngController-production</title>
+    <script src="js/angular.js"></script>
+    <script type="text/javascript">
+        'use strict';
+        angular.module('example', [])
+            .controller('HelloWorld', ['$scope', HelloWorld]);
+
+        function HelloWorld($scope) {
+            $scope.text = "niko";
+        }
+    </script>
+</head>
+
+<body ng-app="example">
+    <div ng-controller="HelloWorld">
+        <input type="text" ng-model="text" />
+        <p>
+            My name is {{text}}
+        </p>
+    </div>
+</body>
+
+</html>
