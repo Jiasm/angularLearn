@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Example - shopping chart</title>
+    <style type="text/css">
+        body {
+            line-height: 1.7;
+        }
+    </style>
+</head>
+
+<body ng-app="shopChart">
+    <div ng-controller="chart">
+        <h1>购物车</h1>
+        <div ng-repeat="item in items">
+            <span>{{item.title}}</span>
+            <input type="text" ng-model="item.count" />
+            <span>单价：{{item.price | currency}}</span>
+            <span>总价：{{item.price * item.count | currency}}</span>
+            <button ng-click="removeItem($index)">删除</button>
+        </div>
+        <div>
+            <input ng-model="addTitle" />
+            <button ng-click="addItem()">添加一个</button>
+        </div>
+        <div>
+            <button ng-click="showPrice()">总价</button>
+        </div>
+    </div>
+    <script src="js/angular.js"></script>
+    <script type="text/javascript">
+        "use strict";
+        angular.module("shopChart", [])
+            .controller("chart", ["$scope", shopChart]);
+
+        function shopChart ($scope) {
+            $scope.items = [
+                {
+                    title: "商品1",
+                    count: 1,
+                    price: 45
+                },
+                {
+                    title: "商品2",
+                    count: 2,
+                    price: 18
+                }
+            ];
+            $scope.addItem = function () {
+                this.items.push({
+                    title: this.addTitle,
+                    price: 20,
+                    count: 0
+                })
+            }
+            $scope.showPrice = function () {
+                var price = 0,
+                    items = this.items,
+                    len = items.length;
+                while (len--) {
+                    price += +items[len]["price"] * items[len]["count"];
+                }
+                alert(price);
+            }
+            $scope.removeItem = function (index) {
+                this.items.splice(index, 1);
+            }
+        }
+    </script>
+</body>
+
+</html>
