@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Example - shopping chart</title>
+    <style type="text/css">
+    body {
+        line-height: 1.7;
+    }
+    </style>
+</head>
+
+<body ng-app="shopChart">
+    <div ng-controller="chart">
+        <h1>购物车</h1>
+        <div ng-repeat="item in items">
+            <span>数量</span>
+            <input type="text" ng-model="item.count" />
+            <span>单价：{{item.price | currency}}</span>
+            <span>总价：{{item.price * item.count | currency}}</span>
+        </div>
+        <div>
+            <p>
+                <span>总价：{{price | currency}}</span>
+            </p>
+            <p>
+                <span>折扣：{{discount | currency}}</span>
+            </p>
+            <p>
+                <span>应付金额：{{total | currency}}</span>
+            </p>
+        </div>
+    </div>
+    <script src="js/angular.js"></script>
+    <script type="text/javascript">
+    "use strict";
+    angular.module("shopChart", [])
+        .controller("chart", ["$scope", shopChart]);
+
+    function shopChart($scope) {
+        $scope.items = [{
+            count: 1,
+            price: 45
+        }, {
+            count: 2,
+            price: 18
+        }];
+        $scope.discount = 0;
+        $scope.getTotal = function() {
+        }
+        $scope.$watch("getTotal()", function(newValue, oldValue) {
+            if (newValue >= 100) {
+                $scope.discount = 10;
+            } else {
+                $scope.discount = 0;
+            }
+        })
+        $scope.$watch("items", function() {
+            var price = 0,
+                discount = 0,
+                items = $scope.items,
+                len = items.length;
+            while (len--) {
+                price += +items[len]["price"] * items[len]["count"];
+            }
+            if (price >= 100) {
+                discount = 10;
+            } else {
+                discount = 0;
+            }
+            $scope.price = price;
+            $scope.discount = discount;
+            $scope.total = price - discount;
+        }, true)
+    }
+    </script>
+</body>
+
+</html>
