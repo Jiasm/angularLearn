@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Example - shopping chart</title>
+    <style type="text/css">
+    body {
+        line-height: 1.7;
+    }
+    </style>
+</head>
+
+<body ng-app="shopChart">
+    <div ng-controller="shopHandler">
+        <h1 ng-bind="title | FirstUpper"></h1>
+        <ul ng-repeat="item in items">
+            <li>
+                价格：<span ng-bind="item.price"></span> 数量：
+                <input type="text" ng-model="item.count"> 总价：<span ng-bind="item.price * item.count"></span>
+            </li>
+        </ul>
+    </div>
+    <script src="js/angular.js"></script>
+    <script type="text/javascript">
+    angular.module("Utils", []).filter("FirstUpper", () => {
+        return value => {
+            return value.replace(/(^|\s)\w/g, ($1) => {
+                return $1.toUpperCase();
+            })
+        }
+    })
+    var shopModel = angular.module("shopChart", ["Utils"]),
+        shopHandler = ($scope, $http) => {
+            $scope.title = "shopping chart";
+            $http.get("test-data.json").success(data => {
+                $scope.items = data;
+            })
+        };
+    shopModel.controller("shopHandler", ["$scope", "$http", shopHandler]);
+    </script>
+</body>
+
+</html>
