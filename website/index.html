@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="MyMail">
+
+<head>
+	<meta charset="utf-8">
+</head>
+
+<body>
+    <div ng-view></div>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="js/angular-route.js"></script>
+    <script type="text/javascript">
+    var Route = angular.module("MyMail", ["ngRoute"]);
+    var messageList = [{
+        id: 0,
+        title: "niko",
+        content: "2333"
+    }];
+    Route.controller("MessageList", ["$scope", function($scope) {
+        $scope.messages = messageList;
+    }])
+
+    Route.controller("MessageDetail", ["$scope", "$routeParams", function($scope, $routeParams) {
+        $scope.message = messageList[$routeParams.id];
+    }])
+
+
+    function serviceConfig($routeProvider) {
+        $routeProvider.when("/", {
+            controller: "MessageList",
+            templateUrl: "list.html"
+        }).when("/view/:id", {
+            controller: "MessageDetail",
+            templateUrl: "detail.html"
+        }).otherwise({
+            redirectTo: "/"
+        })
+    }
+    Route.config(serviceConfig)
+    </script>
+</body>
+
+</html>
