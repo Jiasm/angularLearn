@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div ng-app="myDirective" ng-controller="directiveController">
+			<input acf ng-model="title"/>
+			<span ng-bind="title"></span>
+		</div>
+		<script src="js/angular.js"></script>
+		<script type="text/javascript">
+		var Example = angular.module("myDirective", []);
+		Example.directive("acf", () => {
+			return {
+				link (scope, elements, attrs, controller) {
+					elements[0].focus();
+				}
+			}
+		})
+		Example.controller("directiveController", ["$scope", ($scope) => {
+			$scope.title = "233";
+		}])
+		</script>
+	</body>
+</html>
