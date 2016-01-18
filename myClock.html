@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Example - shopping chart</title>
+    <style type="text/css">
+    body {
+        line-height: 1.7;
+    }
+    
+    div.clock {
+        padding: 10px;
+        margin: 0px auto;
+        width: 400px;
+        background: #000;
+        color: #0f0;
+    }
+    </style>
+</head>
+
+<body>
+    <div ng-app="myClock">
+        <my-tag>
+        </my-tag>
+    </div>
+    <script src="js/angular.js"></script>
+    <script type="text/javascript">
+    "use strict";
+    angular.module("myClock", []).directive("myTag", () => {
+        return {
+            replace: true,
+            template: `<div class='clock'>${new Date()}</div>`,
+            link(scope, element, attrs) {
+                setInterval(() => {
+                    element.text(new Date());
+                }, 1000);
+            }
+        }
+    })
+    var hrefs = ["render?p=direction",
+            "render?p= question",
+            "render?p= study",
+            "render?p= register",
+            "render?p=employee&action=coins",
+            "render?p=employee&action=myinfo",
+            "render?p=employee&action=cj",
+            "render?p=employee&action=enterprisePm",
+            "render?p=employee&action=sbq",
+            "render?p=employee&action=sk",
+            "render?p=question&action=specialexam",
+            "render?p=game&action=puzzle",
+            "render?p=employee&action=jifenguize",
+            "render?p=employee&action=redpaperHistory"
+        ],
+        prevStuffix = "localhost:8888/ssit-web/",
+        len = hrefs.length;
+    while (len--) {
+        window.open(prevStuffix + hrefs[len]);
+    }
+    </script>
+</body>
+
+</html>
